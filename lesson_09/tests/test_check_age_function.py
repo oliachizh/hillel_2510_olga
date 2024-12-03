@@ -4,7 +4,11 @@ import pathlib
 import random
 sys.path.insert(0, str(pathlib.Path(__file__).parent.parent))
 from homework_09 import check_age_more_than_30
-from hillel_2510_olga.lesson_09.core.function_asserts import assert_true
+sys.path.insert(0, str(pathlib.Path(__file__).parent))
+from core.function_asserts import assert_true
+sys.path.insert(0, str(pathlib.Path(__file__).parent.parent.parent))
+from loggers import sample_logger
+import logging
 
 
 people_records = [
@@ -27,10 +31,13 @@ people_records = [
 
 class TestCheckAgePositiveScenariouse(unittest.TestCase):
     def test_check_age_more_than_30(self):
+        logging.info(f'Getting all indexes with age >=30')
         valid_indexes = [i for i, record in enumerate(people_records) if record[2] >= 30]
         indexes = (random.sample(valid_indexes, 3))
+        logging.info(f'Getting 3 random indexes with age >=30 {indexes}')
         expected_result = True
         assert_true(people_records, indexes,expected_result)
+        logging.info(f'Getting result - {assert_true(people_records, indexes,expected_result)}')
 
 
 class TestCheckAgeNegativeScenariouse(unittest.TestCase):
