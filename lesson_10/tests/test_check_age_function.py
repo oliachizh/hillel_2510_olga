@@ -24,11 +24,17 @@ people_records = [
       ('Ava', 'White', 42, 'Journalist', 'San Diego'),
       ('Ethan', 'Anderson', 36, 'Product Manager', 'Phoenix')
 ]
+
+
 @pytest.mark.positive
 class TestCheckAgePositiveScenariouse:
-    def test_check_age_more_than_30(self):
+    @pytest.fixture(scope ='module')
+    def set_up(self):
         valid_indexes = [i for i, record in enumerate(people_records) if record[2] >= 30]
-        indexes = (random.sample(valid_indexes, 3))
+        return valid_indexes
+
+    def test_check_age_more_than_30(self, set_up):
+        indexes = (random.sample(set_up, 3))
         expected_result = True
         assert_true(people_records, indexes,expected_result)
 
